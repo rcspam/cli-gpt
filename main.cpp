@@ -42,7 +42,10 @@ int main(int argc, char *argv[]) {
 
     auto command = completion["choices"][0]["text"].get<std::string>();
     command.erase(std::remove(command.begin(), command.end(), '\n'), command.cend());
-
+    
+    // Add /bin/bash -c to the command
+    auto command_bash = "/bin/bash -c '" + command + "'";
+        
     std::cout << "Command: " << command << '\n';
 
     // ask for confirmation
@@ -50,7 +53,7 @@ int main(int argc, char *argv[]) {
     std::string answer;
     std::cin >> answer;
     if (answer == "y") {
-        system(command.c_str());
+        system(command_bash.c_str());
     }
     return 0;
 }
